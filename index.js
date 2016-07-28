@@ -4,31 +4,7 @@ var request = require('request');
 var Regex = require('regex');
 var app = express();
 
-module.exports = {
-  log: require('./lib/log.js'),
-  Wit: require('./lib/wit.js').Wit,
-};
-
-let Wit = null;
-let log = null;
-try {
-  // if running from repo
-  Wit = require('../').Wit;
-  log = require('../').log;
-} catch (e) {
-  Wit = require('node-wit').Wit;
-  log = require('node-wit').log;
-}
-
 const WIT_TOKEN = process.env.WIT_TOKEN;
-
-// Messenger API parameters
-const FB_PAGE_ID = process.env.FB_PAGE_ID;
-if (!FB_PAGE_ID) { throw new Error('missing FB_PAGE_ID') }
-const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
-if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
-const FB_APP_SECRET = process.env.FB_APP_SECRET;
-if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
