@@ -44,7 +44,8 @@ function skynetBrain(messages) {
   } else {
     //only echo messages from heroku bot application
     //future integration will be held from Wit.Ai
-    sendWitMessage(messages.message.text);
+    var witresponse = sendWitMessage(messages.message.text);
+    console.log(witresponse);
 
     sendMessage(messages.sender.id, {text: ">:" + sendWitMessage(messages.message.text)});
   }
