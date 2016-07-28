@@ -36,13 +36,13 @@ app.post('/webhook', function (req, res) {
 });
 
 function skynetBrain(messages) {
-  if( messages === ":)" ) {
+  if( messages.message.text === ":)" ) {
     sendMessage(event.sender.id, {text: "Welcome on Skynet Communication Inc. How we can help you?"});
-  } else if( messages.contains("Falken") ) {
+  } else if( messages.message.text.contains("Falken") ) {
     sendMessage(event.sender.id, {text: "Buongiorno dottor Falken. Come va oggi? Cosa ne pensa di fare un gioco?"});
-  } else if( messages.contains("meteo") ) {
+  } else if( messages.message.text.contains("meteo") ) {
     sendMessage(event.sender.id, {text: "Oggi il tempo è soleggiato e sereno, potrebbe essere una bella idea fare una scampagnat,non trovi?"});
-  } else if( messages.contains("ecommerce") || messages.contains("e-commerce") ) {
+  } else if( messages.message.text.contains("ecommerce") || messages.contains("e-commerce") ) {
     sendMessage(event.sender.id, {text: "Benvenuto nel canale e-commerce della skynet communication. Cosa vuole acquistare?"});
   } else {
     sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
