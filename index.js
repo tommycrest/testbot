@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
+var Regex = require('regex');
 var app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -36,6 +37,24 @@ app.post('/webhook', function (req, res) {
 });
 
 function skynetBrain(messages) {
+  var nlpsense = ['/meteo in /i','/vorrei prenotare un testdrive /i','/vorrei prenotare un tavolo /i', '/ciao/i']
+  if( messages.message.text ) {
+
+    for( var i=0; nlpsense.length; i++  ) {
+      var regex = new Regex(nlpsense[i])
+      if( regex.test(messages.message.text)) {
+        if( i == 0 ) {
+            regex = new Regex('/s(w+)$');
+            var text = regex.exec(messages.message.text);
+            sendMessage(messages.sender.id, {text: "Oggi a "+text+" è una bellissima giornata di sole e possiamo fare una bella scampagnata. Che ne pensi?"});
+        }
+        if( i == 3 ) {
+            sendMessage(messages.sender.id, {text: "Ciao, piacere di ritrovarti! In cosa posso aiutarti?"});
+        }
+      }
+    }
+  }
+
   if( messages.message.text === ":)" ) {
     sendMessage(messages.sender.id, {text: "Welcome on Skynet Communication Inc. How we can help you?"});
   } else if( messages.message.text == "Falken" ) {
