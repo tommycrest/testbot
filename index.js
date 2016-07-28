@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var Regex = require('regex');
+var wit = require('node-wit');
 var app = express();
 
 const WIT_TOKEN = process.env.WIT_TOKEN;
@@ -44,10 +45,13 @@ function skynetBrain(messages) {
   } else {
     //only echo messages from heroku bot application
     //future integration will be held from Wit.Ai
-    var witresponse = sendWitMessage(messages.message.text);
-    console.log(witresponse);
+    wit.captureTextIntent(WIT_TOKEN, messages.message.text, function (err, res) {
+    console.log("Response from Wit for text input: ");
+    if (err) console.log("Error: ", err);
+    console.log(JSON.stringify(res, null, " "));
+    });
 
-    sendMessage(messages.sender.id, {text: ">:" + sendWitMessage(messages.message.text)});
+    sendMessage(messages.sender.id, {text: ">: controlla heroku log" });
   }
 }
 
@@ -59,26 +63,6 @@ function sendMessage(recipientId, message) {
         method: 'POST',
         json: {
             recipient: {id: recipientId},
-            message: message,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending message: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        }
-    });
-};
-
-
-// generic function sending messages
-function sendWitMessage(message) {
-    request({
-        url: 'https://api.wit.ai/message?v=20160728&q=',
-        qs: {access_token: process.env.WIT_TOKEN},
-        method: 'POST',
-        json: {
-            //recipient: {id: recipientId},
             message: message,
         }
     }, function(error, response, body) {
