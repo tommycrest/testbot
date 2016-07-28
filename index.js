@@ -37,7 +37,7 @@ app.post('/webhook', function (req, res) {
 });
 
 function skynetBrain(messages) {
-  var nlpsense = ['/meteo in /i','/vorrei prenotare un testdrive /i','/vorrei prenotare un tavolo /i', '/ciao/i']
+  var nlpsense = ['/meteo in /i','/vorrei prenotare un testdrive /i','/vorrei prenotare un tavolo /i', '/ciao/i'];
   if( messages.message.text ) {
 
     for( var i=0; nlpsense.length; i++  ) {
