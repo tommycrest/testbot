@@ -40,7 +40,7 @@ function skynetBrain(messages) {
   var nlpsense = ['/meteo in /i','/vorrei prenotare un testdrive /i','/vorrei prenotare un tavolo /i', '/ciao/i'];
   if( messages.message.text ) {
 
-    for( var i=0; nlpsense.length; i++  ) {
+    for( var i=0; i<3; i++  ) {
       var regex = new Regex(nlpsense[i])
       if( regex.test(messages.message.text)) {
         if( i == 0 ) {
