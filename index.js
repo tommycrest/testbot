@@ -37,33 +37,11 @@ app.post('/webhook', function (req, res) {
 });
 
 function skynetBrain(messages) {
-  var nlpsense = ['/meteo in /i','/vorrei prenotare un testdrive /i','/vorrei prenotare un tavolo /i', '/ciao/i'];
-  if( messages.message.text ) {
-
-    for( var i=0; i<3; i++  ) {
-      var regex = new Regex(nlpsense[i])
-      if( regex.test(messages.message.text)) {
-        if( i == 0 ) {
-            regex = new Regex('/s(w+)$');
-            var text = regex.exec(messages.message.text);
-            sendMessage(messages.sender.id, {text: "Oggi a "+text+" è una bellissima giornata di sole e possiamo fare una bella scampagnata. Che ne pensi?"});
-        }
-        if( i == 3 ) {
-            sendMessage(messages.sender.id, {text: "Ciao, piacere di ritrovarti! In cosa posso aiutarti?"});
-        }
-      }
-    }
-  }
-
   if( messages.message.text === ":)" ) {
     sendMessage(messages.sender.id, {text: "Welcome on Skynet Communication Inc. How we can help you?"});
-  } else if( messages.message.text == "Falken" ) {
-    sendMessage(messages.sender.id, {text: "Buongiorno dottor Falken. Come va oggi? Cosa ne pensa di fare un gioco?"});
-  } else if( messages.message.text == "meteo" ) {
-    sendMessage(messages.sender.id, {text: "Oggi il tempo è soleggiato e sereno, potrebbe essere una bella idea fare una scampagnat,non trovi?"});
-  } else if( messages.message.text == "ecommerce" ||  messages.message.text == "e-commerce" ) {
-    sendMessage(messages.sender.id, {text: "Benvenuto nel canale e-commerce della skynet communication. Cosa vuole acquistare?"});
   } else {
+    //only echo messages from heroku bot application
+    //future integration will be held from Wit.Ai
     sendMessage(messages.sender.id, {text: ">:" + messages.message.text});
   }
 }
