@@ -28,7 +28,14 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+          if( event.message.text == "Ciao Skynet") {
+            sendMessage(event.sender.id, {text: "Ciao! Questa unità senziente sarà programmata a breve per possedere una sua memoria e una sua autonomia decisionale."});
+          } else if (event.message.text == "Skynet?") {
+            sendMessage(event.sender.id, {text: "Buongiorno signore!"});
+          } else if( event.message.text == "Meteo su Milano?") {
+            sendMessage(event.sender.id, {text: "Oggi il tempo su Milano è soleggiato con una tempratura gradevole! Vuoi organizzare qualcosa?" });
+        } else {
+          sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
         }
     }
     res.sendStatus(200);
